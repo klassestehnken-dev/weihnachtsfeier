@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weihnachtsfeier – Vorbestellung III Könige</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⭐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF0F3; --surface:#FFFFFF; --ink:#1B2232; --muted:#5A6375; --line:#D4D9E0;
+  --gold:#9A6B12; --gold-soft:#F5EAD0; --myrrh:#8A2B39; --ok:#2F6B4A; --on-ink:#FFFFFF;
+  --font-d:"Barlow Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --font-b:"Barlow","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111620; --surface:#19202D; --ink:#ECEAE4; --muted:#9BA4B5; --line:#2A3345;
+    --gold:#E2B65C; --gold-soft:#332B1C; --myrrh:#E58A97; --ok:#7CC79B; --on-ink:#111620;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111620; --surface:#19202D; --ink:#ECEAE4; --muted:#9BA4B5; --line:#2A3345;
+  --gold:#E2B65C; --gold-soft:#332B1C; --myrrh:#E58A97; --ok:#7CC79B; --on-ink:#111620;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:16px;line-height:1.45;padding-bottom:120px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+[hidden]{display:none !important}
+
+/* Kopf */
+.hero{padding:36px 0 26px;border-bottom:1px solid var(--line)}
+.stars{display:flex;gap:10px;color:var(--gold);margin-bottom:14px}
+.stars svg{width:22px;height:22px}
+.stars svg:nth-child(2){transform:translateY(-6px)}
+.brand{font-family:var(--font-d);font-weight:700;font-size:clamp(54px,15vw,96px);line-height:.88;letter-spacing:-.005em;margin:0;text-transform:uppercase}
+.sub{font-family:var(--font-d);font-weight:500;font-size:clamp(22px,5.5vw,30px);margin:6px 0 0;color:var(--muted)}
+.lede{font-size:17px;max-width:52ch;margin:16px 0 0}
+.info{margin-top:16px;padding:12px 14px;border-left:3px solid var(--gold);background:var(--surface);white-space:pre-line}
+
+/* Reiter */
+.tabs{display:flex;gap:4px;margin-top:22px}
+.tab{background:none;border:1px solid var(--line);border-radius:999px;padding:7px 16px;cursor:pointer;font-weight:500}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.badge{display:inline-block;min-width:1.6em;margin-left:6px;padding:0 6px;border-radius:999px;background:var(--gold);color:var(--on-ink);font-size:13px;text-align:center}
+
+/* Formular */
+.field{margin:26px 0 8px}
+.field label{display:block;font-weight:600;margin-bottom:6px}
+.field input,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.field textarea{min-height:76px;resize:vertical}
+.hint{color:var(--muted);font-size:14px;margin:6px 0 0}
+.banner{margin-top:22px;padding:12px 14px;border-radius:10px;background:var(--gold-soft);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.notice{margin-top:22px;padding:12px 14px;border-radius:10px;border:1px solid var(--myrrh);color:var(--myrrh)}
+
+.cat{margin-top:34px}
+.cat h2{font-family:var(--font-d);font-weight:600;font-size:32px;line-height:1;margin:0}
+.cat .cat-note{color:var(--muted);font-size:14px;margin:6px 0 0}
+.items{margin-top:12px;border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:14px 8px;border-bottom:1px solid var(--line);transition:background-color .2s}
+.item.has{background:var(--gold-soft)}
+.item-name{font-family:var(--font-d);font-weight:600;font-size:22px;line-height:1.1}
+.tag{display:inline-block;vertical-align:middle;margin-left:6px;padding:1px 7px;border-radius:999px;font-family:var(--font-b);font-size:12px;font-weight:500;border:1px solid currentColor}
+.tag.v{color:var(--ok)}
+.tag.s{color:var(--myrrh)}
+.item-desc{color:var(--muted);font-size:14px;margin-top:3px}
+.dip{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:14px}
+.dip select{padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);max-width:100%}
+.item-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.price{font-family:var(--font-d);font-weight:500;font-size:19px;white-space:nowrap}
+.stepper{display:flex;align-items:center;gap:2px}
+.stepper button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:20px;line-height:1;display:grid;place-items:center}
+.stepper button:disabled{opacity:.35;cursor:default}
+.stepper output{min-width:2ch;text-align:center;font-family:var(--font-d);font-weight:600;font-size:22px}
+
+/* Leiste unten */
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:10}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-top:12px;padding-bottom:12px}
+.sum-label{font-size:13px;color:var(--muted)}
+.sum{font-family:var(--font-d);font-weight:700;font-size:30px;line-height:1}
+.status{font-size:13px;margin-top:3px;min-height:1em}
+.status.err{color:var(--myrrh)}
+.status.ok{color:var(--ok)}
+.btn{border:0;border-radius:10px;padding:12px 20px;background:var(--ink);color:var(--on-ink);font-family:var(--font-d);font-weight:600;font-size:20px;cursor:pointer;white-space:nowrap}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
+.btn.small{font-size:16px;padding:8px 14px}
+.linkbtn{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:14px}
+.linkbtn.danger{color:var(--myrrh)}
+
+/* Code-Panel */
+.panel{margin-top:30px;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.panel h3{font-family:var(--font-d);font-weight:600;font-size:26px;margin:0 0 6px}
+.panel textarea{width:100%;min-height:190px;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center}
+
+/* Übersicht */
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:28px}
+.stat b{display:block;font-family:var(--font-d);font-size:40px;font-weight:700;line-height:1}
+.stat span{color:var(--muted);font-size:14px}
+.ov h2{font-family:var(--font-d);font-weight:600;font-size:30px;margin:36px 0 10px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:480px;background:var(--surface)}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+th{font-weight:600;color:var(--muted);font-size:13px}
+td.num,th.num{text-align:right;white-space:nowrap}
+.person{padding:14px 0;border-bottom:1px solid var(--line)}
+.person-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.person-name{font-family:var(--font-d);font-weight:600;font-size:23px}
+.person-sum{font-family:var(--font-d);font-weight:600;font-size:21px;white-space:nowrap}
+.person-items{font-size:15px;margin-top:2px}
+.person-note{font-size:14px;color:var(--muted);margin-top:4px}
+.person-actions{display:flex;gap:16px;margin-top:6px;align-items:center}
+.src{font-size:12px;color:var(--muted)}
+.empty{color:var(--muted);padding:18px 0}
+.names{columns:3 170px;column-gap:28px;margin:0;padding-left:1.6em}
+.names li{padding:4px 0;break-inside:avoid}
+.names li::marker{color:var(--muted);font-size:14px}
+.tools .field{margin-top:14px}
+.switch{display:flex;align-items:center;gap:10px;cursor:pointer;margin-top:14px}
+.switch input{width:20px;height:20px;accent-color:var(--gold)}
+
+@media (prefers-reduced-motion: reduce){ .item{transition:none} }
+@media (max-width:420px){
+  .item-name{font-size:20px}
+  .sum{font-size:26px}
+  .btn{font-size:18px;padding:11px 14px}
+}
+
+.refresh{margin-left:auto}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="stars" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 1l2.6 8.4H23l-6.8 5 2.6 8.4L12 17.8l-6.8 5 2.6-8.4L1 9.4h8.4z"/></svg>
+      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 1l2.6 8.4H23l-6.8 5 2.6 8.4L12 17.8l-6.8 5 2.6-8.4L1 9.4h8.4z"/></svg>
+      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 1l2.6 8.4H23l-6.8 5 2.6 8.4L12 17.8l-6.8 5 2.6-8.4L1 9.4h8.4z"/></svg>
+    </div>
+    <h1 class="brand">III Könige</h1>
+    <p class="sub">Weihnachtsfeier des Kollegiums</p>
+    <p class="lede">Such dir aus, was du essen möchtest. Die Bestellungen werden gesammelt und vorab ans Restaurant geschickt.</p>
+    <div id="info" class="info" hidden></div>
+    <div class="tabs" id="tabs" role="tablist" hidden>
+      <button class="tab" role="tab" id="tabForm" aria-selected="true">Bestellung</button>
+      <button class="tab" role="tab" id="tabOv" aria-selected="false">Übersicht<span class="badge" id="ovCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="formView">
+    <div id="setupNotice" class="notice" hidden>Die Seite ist noch nicht eingerichtet: In der Datei index.html fehlt die Adresse der Web-App (API_URL).</div>
+    <div id="editBanner" class="banner" hidden>
+      <span id="editLabel"></span>
+      <button class="linkbtn" id="editCancel" type="button">Abbrechen</button>
+    </div>
+    <div id="lockNotice" class="notice" hidden>Die Bestellung ist geschlossen. Änderungen sind nicht mehr möglich.</div>
+
+    <div class="field">
+      <label for="name">Dein Name</label>
+      <input id="name" autocomplete="name" placeholder="Vor- und Nachname" maxlength="80">
+    </div>
+
+    <div id="menu"></div>
+
+    <div class="field">
+      <label for="note">Sonderwünsche</label>
+      <textarea id="note" maxlength="300" placeholder="Zum Beispiel: ohne Koriander"></textarea>
+    </div>
+    <p class="hint" id="deviceHint">Du kannst deine Bestellung später auf diesem Gerät und in diesem Browser wieder öffnen und ändern.</p>
+    <p><button class="linkbtn danger" id="withdraw" type="button" hidden>Meine Bestellung zurückziehen</button></p>
+  </section>
+
+  <section id="ovView" class="ov" hidden>
+    <div class="row" style="margin-top:22px">
+      <span id="ovStatus" class="hint"></span>
+      <button class="btn small ghost refresh" id="refreshBtn" type="button">Aktualisieren</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stPeople">0</b><span>Personen</span></div>
+      <div class="stat"><b id="stDishes">0</b><span>Gerichte und Dips</span></div>
+      <div class="stat"><b id="stTotal">0,00 €</b><span>Gesamt</span></div>
+    </div>
+    <div class="row" style="margin-top:22px">
+      <button class="btn small" id="xlsxBtn" type="button">Excel exportieren</button>
+      <button class="btn small" id="pdfBtn" type="button">PDF exportieren</button>
+      <span id="exportStatus" class="hint"></span>
+    </div>
+
+    <h2>Schon eingetragen</h2>
+    <ol class="names" id="nameList"></ol>
+    <p class="empty" id="namesEmpty">Noch niemand.</p>
+    <div class="row"><button class="btn small ghost" id="copyNames" type="button">Namen kopieren</button><span id="namesStatus" class="hint"></span></div>
+
+    <h2>Nach Personen</h2>
+    <div id="personList"></div>
+    <div class="row"><button class="btn small ghost" id="addManual" type="button">Bestellung für jemanden eintragen</button></div>
+
+    <h2>Nach Speisen</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>Speise</th><th class="num">Anzahl</th><th>Bestellt von</th></tr></thead>
+      <tbody id="dishBody"></tbody>
+    </table></div>
+
+    <h2>Verwaltung</h2>
+    <div class="tools">
+      <div class="field">
+        <label for="infoText">Hinweis für alle (Datum, Uhrzeit, Bestellschluss)</label>
+        <textarea id="infoText" maxlength="400" placeholder="Zum Beispiel: Freitag, 12. Dezember, 19 Uhr. Bitte bis 1. Dezember bestellen."></textarea>
+        <div class="row"><button class="btn small" id="infoBtn" type="button">Hinweis speichern</button><span id="infoStatus" class="hint"></span></div>
+      </div>
+      <label class="switch"><input type="checkbox" id="lockBox"> Bestellung schließen (Kollegen können dann nichts mehr ändern)</label>
+      <p style="margin-top:22px"><button class="linkbtn" id="logout" type="button">Verwaltung auf diesem Gerät abmelden</button></p>
+    </div>
+  </section>
+</main>
+
+<div class="bar" id="bar">
+  <div class="wrap">
+    <div>
+      <div class="sum-label">Deine Summe</div>
+      <div class="sum" id="sum">0,00 €</div>
+      <div class="status" id="status" aria-live="polite"></div>
+    </div>
+    <button class="btn" id="saveBtn" type="button">Bestellung speichern</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+<script>
+"use strict";
+/* ============================================================
+   HIER die Adresse der Web-App eintragen (endet auf /exec):
+   ============================================================ */
+const API_URL = "https://script.google.com/macros/s/AKfycbyGCD5o_1Vxi_7pCHWyaSvaH6HOCagGXgumU0OHzS0Qyfjok2zbimqRV1j2wU4ieXmu/exec";
+
+/* ---------- Speisekarte (muss zu Code.gs passen) ---------- */
+const MENU = [
+  {id:"vorab", title:"Vorab", items:[
+    {id:"edamame", name:"Edamame", desc:"junge Sojabohne | Limette | Meersalz", price:6.9, tags:["v"]},
+    {id:"dolmadakia", name:"Dolmadakia", desc:"Fava | Kapern | Olive", price:6.9, tags:["v"]},
+    {id:"aioli-vorab", name:"Aioli", desc:"Knoblauch | Zitrone | Thymian", price:3.9},
+    {id:"feigencreme-vorab", name:"Feigencreme", desc:"karamellisierte Walnuss | Frischkäse", price:4.1},
+    {id:"brot", name:"Brot", desc:"", price:2.5, tags:["v"]},
+    {id:"oliven", name:"Oliven", desc:"", price:4.9, tags:["v"]}
+  ]},
+  {id:"vegetarisch", title:"Vegetarisch", items:[
+    {id:"maniok-pommes", name:"Maniok-Pommes", desc:"Meersalz | Dip nach Wahl", price:7.4, tags:["v"], dip:true},
+    {id:"feta-sousami", name:"Feta Sousami", desc:"Thymian | Honig | Zitrone", price:8.2},
+    {id:"pak-choi", name:"Pak Choi", desc:"Chili | Ingwer | Sprossen", price:7.4, tags:["v"]},
+    {id:"twigin-dubu", name:"Twigin Dubu", desc:"knusprige Tofuwürfel | Dip nach Wahl", price:7.9, tags:["v"], dip:true},
+    {id:"blumenkohl", name:"Blumenkohl", desc:"Granatapfel | Mandel | Joghurt-Tahin", price:8.9, tags:["v"]},
+    {id:"maniok-kroketten", name:"Maniok-Kroketten", desc:"Emmentaler | Muskat | Dip nach Wahl", price:7.4, dip:true}
+  ]},
+  {id:"salat", title:"Salat", items:[
+    {id:"pfluecksalat", name:"Pflücksalat", desc:"Kirschtomate | Walnuss | Apfel-Balsamico", price:8.9, tags:["v"]},
+    {id:"fetasalat", name:"Feta-Salat", desc:"Kirschtomate | Walnuss | Dill-Honig-Senf", price:9.9}
+  ]},
+  {id:"fisch", title:"Fisch", items:[
+    {id:"tuna-tataki", name:"Tuna Tataki", desc:"Miso | Sesam | Jungzwiebel", price:14.8},
+    {id:"ceviche", name:"Ceviche", desc:"Limette | Chili | Koriander", price:10.6, tags:["s"]},
+    {id:"tuna-tatar", name:"Tuna Tatar", desc:"Soja | Avocado | Limette", price:12.8}
+  ]},
+  {id:"fleisch", title:"Fleisch", items:[
+    {id:"karaage", name:"Karaage", desc:"knuspriges Hühnchen | 24 h Marinade", price:11.4},
+    {id:"bbq-ribs", name:"BBQ Ribs", desc:"fruchtig | rauchig", price:11.4},
+    {id:"lamm", name:"Lamm", desc:"Chimichurri | Sous-Vide 54 °C", price:14.8}
+  ]},
+  {id:"dips", title:"Dips", note:"Zusätzliche Dips, je 1,50 €. Bei Maniok-Pommes, Twigin Dubu und Maniok-Kroketten ist ein Dip schon dabei.", items:[
+    {id:"chili-mayo", name:"Chili-Mayo", desc:"fruchtig | feurig", price:1.5, tags:["v","s"]},
+    {id:"dreierlei", name:"Dreierlei", desc:"Honig | Senf | Dill", price:1.5},
+    {id:"teriyaki", name:"Teriyaki", desc:"süß | salzig", price:1.5, tags:["v"]},
+    {id:"cho-ganjang", name:"Cho Ganjang", desc:"Soja | Sesam", price:1.5, tags:["v"]},
+    {id:"cho-gochujang", name:"Cho Gochujang", desc:"pikant | fruchtig", price:1.5, tags:["v","s"]},
+    {id:"feigencreme", name:"Feigencreme", desc:"karamellisierte Walnuss | Frischkäse", price:1.5},
+    {id:"aioli", name:"Aioli", desc:"Knoblauch | Zitrone | Thymian", price:1.5},
+    {id:"bbq", name:"BBQ", desc:"fruchtig | rauchig", price:1.5, tags:["v"]},
+    {id:"karamell", name:"Karamell", desc:"Kokos | Meersalzflocken", price:1.5}
+  ]},
+  {id:"hinterher", title:"Hinterher", items:[
+    {id:"dessert-trio", name:"Dessert-Trio", desc:"süß, zum Teilen | Auswahl auf Nachfrage", price:12.9}
+  ]}
+];
+const ITEMS = new Map();
+MENU.forEach(c => c.items.forEach(it => { it.cat = c.title; ITEMS.set(it.id, it); }));
+const DIPS = MENU.find(c => c.id === "dips").items;
+const dipName = id => (DIPS.find(d => d.id === id) || {}).name || "";
+const ORDER_IDX = [...ITEMS.keys()];
+const orderIndex = id => ORDER_IDX.indexOf(id);
+const MAXQ = 20;
+
+const fmt = new Intl.NumberFormat("de-DE", {style:"currency", currency:"EUR"});
+const eur = n => fmt.format(n);
+const eurPlain = n => eur(n).replace(/\s/g, " ");
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---------- Speicher im Browser ---------- */
+const store = {
+  get(k){ try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v){ try { localStorage.setItem(k, v); } catch (e) {} },
+  del(k){ try { localStorage.removeItem(k); } catch (e) {} }
+};
+function newToken(){
+  const a = new Uint8Array(18);
+  crypto.getRandomValues(a);
+  return btoa(String.fromCharCode(...a)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+/* ---------- Server ---------- */
+const configured = /^https:\/\/script\.google(usercontent)?\.com\//.test(API_URL);
+async function apiGet(params){
+  const r = await fetch(API_URL + "?" + new URLSearchParams(params), {cache:"no-store"});
+  return r.json();
+}
+async function apiPost(body){
+  const r = await fetch(API_URL, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(body)});
+  return r.json();
+}
+
+/* ---------- Zustand ---------- */
+const state = {token:null, adminKey:null, isAdmin:false, locked:false, info:"", ownSaved:false, orders:[]};
+let editing = null;   // {token, label}
+let ownStash = null;
+const qty = {}, dips = {};
+
+/* ---------- Speisekarte ---------- */
+function buildMenu(){
+  const root = $("menu");
+  MENU.forEach(cat => {
+    const sec = document.createElement("section");
+    sec.className = "cat";
+    sec.innerHTML = `<h2>${esc(cat.title)}</h2>${cat.note ? `<p class="cat-note">${esc(cat.note)}</p>` : ""}<div class="items"></div>`;
+    const list = sec.querySelector(".items");
+    cat.items.forEach(it => {
+      qty[it.id] = 0;
+      const tags = (it.tags || []).map(t => t === "v" ? '<span class="tag v">vegan</span>' : '<span class="tag s">scharf</span>').join("");
+      const row = document.createElement("div");
+      row.className = "item";
+      row.id = "row-" + it.id;
+      row.innerHTML = `
+        <div class="item-main">
+          <div class="item-name">${esc(it.name)}${tags}</div>
+          ${it.desc ? `<div class="item-desc">${esc(it.desc)}</div>` : ""}
+          ${it.dip ? `<label class="dip" hidden>Dip <select data-dip="${it.id}"><option value="">bitte wählen</option>${DIPS.map(d => `<option value="${d.id}">${esc(d.name)}</option>`).join("")}</select></label>` : ""}
+        </div>
+        <div class="item-side">
+          <div class="price">${eur(it.price)}</div>
+          <div class="stepper">
+            <button type="button" data-step="-1" data-id="${it.id}" aria-label="${esc(it.name)} weniger" disabled>−</button>
+            <output id="q-${it.id}" aria-live="polite">0</output>
+            <button type="button" data-step="1" data-id="${it.id}" aria-label="${esc(it.name)} mehr">+</button>
+          </div>
+        </div>`;
+      list.appendChild(row);
+    });
+    root.appendChild(sec);
+  });
+  root.addEventListener("click", e => {
+    const b = e.target.closest("button[data-step]");
+    if (!b) return;
+    setQty(b.dataset.id, qty[b.dataset.id] + Number(b.dataset.step));
+    setStatus("");
+  });
+  root.addEventListener("change", e => {
+    const s = e.target.closest("select[data-dip]");
+    if (s) dips[s.dataset.dip] = s.value;
+  });
+}
+function setQty(id, n){
+  n = Math.max(0, Math.min(MAXQ, n | 0));
+  qty[id] = n;
+  $("q-" + id).textContent = n;
+  const row = $("row-" + id);
+  row.classList.toggle("has", n > 0);
+  row.querySelector('[data-step="-1"]').disabled = n === 0;
+  row.querySelector('[data-step="1"]').disabled = n >= MAXQ;
+  const dl = row.querySelector(".dip");
+  if (dl) dl.hidden = n === 0;
+  let s = 0;
+  for (const [k, v] of Object.entries(qty)) s += v * ITEMS.get(k).price;
+  $("sum").textContent = eur(s);
+}
+function collect(){
+  const items = {}, d = {};
+  for (const [id, n] of Object.entries(qty)) if (n > 0) {
+    items[id] = n;
+    if (ITEMS.get(id).dip && dips[id]) d[id] = dips[id];
+  }
+  return {name:$("name").value.trim(), items, dips:d, note:$("note").value.trim()};
+}
+function fillForm(o){
+  o = o || {};
+  $("name").value = o.name || "";
+  $("note").value = o.note || "";
+  const items = o.items || {}, d = o.dips || {};
+  for (const id of ITEMS.keys()) {
+    dips[id] = d[id] || "";
+    const sel = document.querySelector(`select[data-dip="${id}"]`);
+    if (sel) sel.value = dips[id];
+    setQty(id, Number(items[id]) || 0);
+  }
+}
+function orderTotal(o){
+  let s = 0;
+  for (const [id, n] of Object.entries(o.items || {})) { const it = ITEMS.get(id); if (it) s += n * it.price; }
+  return s;
+}
+function lineLabel(o, id){
+  const it = ITEMS.get(id);
+  return it.name + (o.dips && o.dips[id] ? ` (Dip: ${dipName(o.dips[id])})` : (it.dip ? " (Dip offen)" : ""));
+}
+function orderLines(o){
+  return Object.entries(o.items || {}).filter(([id]) => ITEMS.has(id))
+    .sort((a, b) => orderIndex(a[0]) - orderIndex(b[0]))
+    .map(([id, n]) => `${n}× ${lineLabel(o, id)}`);
+}
+function setStatus(text, kind){
+  const s = $("status");
+  s.textContent = text || "";
+  s.className = "status" + (kind ? " " + kind : "");
+}
+const ERRORS = {
+  locked:"Die Bestellung ist geschlossen.",
+  invalid:"Die Bestellung ist unvollständig.",
+  key:"Der Verwaltungsschlüssel stimmt nicht.",
+  token:"Interner Fehler. Bitte lade die Seite neu.",
+  server:"Der Server hat einen Fehler gemeldet. Bitte versuch es gleich noch einmal."
+};
+const errText = code => ERRORS[code] || "Das hat nicht geklappt. Bitte versuch es gleich noch einmal.";
+
+/* ---------- Speichern ---------- */
+async function save(){
+  if (!configured) { setStatus("Die Seite ist noch nicht eingerichtet.", "err"); return; }
+  const o = collect();
+  if (!o.name) { setStatus("Bitte trag oben deinen Namen ein.", "err"); $("name").focus(); return; }
+  if (!Object.keys(o.items).length) { setStatus("Wähl mindestens eine Speise aus.", "err"); return; }
+  const missing = Object.keys(o.items).find(id => ITEMS.get(id).dip && !o.dips[id]);
+  if (missing) { setStatus("Bitte wähl den Dip für " + ITEMS.get(missing).name + ".", "err"); document.querySelector(`select[data-dip="${missing}"]`).focus(); return; }
+  if (state.locked && !state.isAdmin) { setStatus("Die Bestellung ist geschlossen.", "err"); return; }
+
+  const btn = $("saveBtn");
+  btn.disabled = true;
+  setStatus("Wird gespeichert …");
+  try {
+    const token = editing ? editing.token : state.token;
+    const r = await apiPost({action:"save", token, order:o, key: state.isAdmin ? state.adminKey : undefined});
+    if (!r.ok) { setStatus(errText(r.error), "err"); return; }
+    if (editing) { finishEditing("Bestellung von " + o.name + " gespeichert."); loadOverview(); }
+    else {
+      state.ownSaved = true;
+      $("withdraw").hidden = false;
+      setStatus("Gespeichert. Danke!", "ok");
+      if (state.isAdmin) loadOverview();
+    }
+  } catch (e) {
+    setStatus("Keine Verbindung zum Server. Bitte versuch es gleich noch einmal.", "err");
+  } finally {
+    btn.disabled = state.locked && !state.isAdmin;
+  }
+}
+$("saveBtn").addEventListener("click", save);
+
+let withdrawArmed = null;
+$("withdraw").addEventListener("click", async () => {
+  const b = $("withdraw");
+  if (!withdrawArmed) {
+    b.textContent = "Wirklich zurückziehen?";
+    withdrawArmed = setTimeout(() => { withdrawArmed = null; b.textContent = "Meine Bestellung zurückziehen"; }, 4000);
+    return;
+  }
+  clearTimeout(withdrawArmed); withdrawArmed = null;
+  b.textContent = "Meine Bestellung zurückziehen";
+  try {
+    const r = await apiPost({action:"delete", token:state.token, key: state.isAdmin ? state.adminKey : undefined});
+    if (!r.ok) { setStatus(errText(r.error), "err"); return; }
+    state.ownSaved = false; b.hidden = true;
+    fillForm({name:$("name").value});
+    setStatus("Deine Bestellung wurde zurückgezogen.", "ok");
+    if (state.isAdmin) loadOverview();
+  } catch (e) { setStatus("Keine Verbindung zum Server.", "err"); }
+});
+
+/* ---------- Reiter ---------- */
+function showTab(which){
+  const ov = which === "ov";
+  $("tabForm").setAttribute("aria-selected", String(!ov));
+  $("tabOv").setAttribute("aria-selected", String(ov));
+  $("formView").hidden = ov;
+  $("ovView").hidden = !ov;
+  $("bar").hidden = ov;
+  window.scrollTo(0, 0);
+}
+$("tabForm").addEventListener("click", () => showTab("form"));
+$("tabOv").addEventListener("click", () => { showTab("ov"); loadOverview(); });
+
+/* ---------- Bearbeiten für andere ---------- */
+function startEditing(token, data, label){
+  if (!editing) ownStash = collect();
+  editing = {token, label};
+  fillForm(data || {});
+  $("editLabel").textContent = label;
+  $("editBanner").hidden = false;
+  $("withdraw").hidden = true;
+  $("deviceHint").hidden = true;
+  setStatus("");
+  showTab("form");
+  if (!data) $("name").focus();
+}
+function finishEditing(msg){
+  editing = null;
+  fillForm(ownStash || {});
+  ownStash = null;
+  $("editBanner").hidden = true;
+  $("withdraw").hidden = !state.ownSaved;
+  $("deviceHint").hidden = false;
+  showTab("ov");
+  $("exportStatus").textContent = msg || "";
+  setStatus("");
+}
+$("editCancel").addEventListener("click", () => finishEditing(""));
+$("addManual").addEventListener("click", () => startEditing(newToken(), null, "Du trägst eine Bestellung für jemand anderen ein."));
+
+/* ---------- Übersicht ---------- */
+async function loadOverview(){
+  if (!state.isAdmin) return;
+  $("ovStatus").textContent = "Wird geladen …";
+  try {
+    const r = await apiGet({action:"list", key:state.adminKey});
+    if (!r.ok) { $("ovStatus").textContent = errText(r.error); return; }
+    state.orders = (r.orders || []).filter(o => o.items && Object.keys(o.items).length)
+      .sort((a, b) => String(a.name).localeCompare(String(b.name), "de"));
+    applyConfig(r);
+    renderOverview();
+    $("ovStatus").textContent = "Stand: " + new Date().toLocaleTimeString("de-DE", {hour:"2-digit", minute:"2-digit"}) + " Uhr";
+  } catch (e) { $("ovStatus").textContent = "Keine Verbindung zum Server."; }
+}
+$("refreshBtn").addEventListener("click", loadOverview);
+
+function aggregate(list){
+  const map = new Map();
+  for (const e of list) for (const [id, n] of Object.entries(e.items)) {
+    const it = ITEMS.get(id); if (!it) continue;
+    if (!map.has(id)) map.set(id, {item:it, total:0, people:[]});
+    const a = map.get(id);
+    a.total += n;
+    a.people.push({name:e.name || "ohne Namen", n, dip: e.dips && e.dips[id] ? dipName(e.dips[id]) : (it.dip ? "Dip offen" : "")});
+  }
+  return [...map.entries()].sort((a, b) => orderIndex(a[0]) - orderIndex(b[0])).map(x => x[1]);
+}
+const personStr = p => p.name + (p.n > 1 ? " " + p.n + "×" : "") + (p.dip ? " (" + p.dip + ")" : "");
+
+const delArmed = new Map();
+function renderOverview(){
+  const list = state.orders;
+  const agg = aggregate(list);
+  $("ovCount").textContent = list.length;
+  $("stPeople").textContent = list.length;
+  $("stDishes").textContent = agg.reduce((s, a) => s + a.total, 0);
+  $("stTotal").textContent = eur(list.reduce((s, e) => s + orderTotal(e), 0));
+
+  $("nameList").innerHTML = list.map(e => `<li>${esc(e.name || "ohne Namen")}</li>`).join("");
+  $("nameList").hidden = !list.length;
+  $("namesEmpty").hidden = !!list.length;
+  $("copyNames").hidden = !list.length;
+
+  $("personList").innerHTML = list.length ? list.map(e => `
+    <div class="person">
+      <div class="person-head"><span class="person-name">${esc(e.name || "ohne Namen")}</span><span class="person-sum">${eur(orderTotal(e))}</span></div>
+      <div class="person-items">${orderLines(e).map(esc).join(", ")}</div>
+      ${e.note ? `<div class="person-note">Sonderwünsche: ${esc(e.note)}</div>` : ""}
+      <div class="person-actions">
+        <button class="linkbtn" data-edit="${esc(e.token)}" type="button">Bearbeiten</button>
+        <button class="linkbtn danger" data-del="${esc(e.token)}" type="button">${delArmed.has(e.token) ? "Wirklich löschen?" : "Löschen"}</button>
+      </div>
+    </div>`).join("") : '<p class="empty">Noch keine Bestellungen. Teil den Link mit dem Kollegium oder trag selbst die erste ein.</p>';
+
+  $("dishBody").innerHTML = agg.length
+    ? agg.map(a => `<tr><td>${esc(a.item.name)}</td><td class="num">${a.total}</td><td>${a.people.map(p => esc(personStr(p))).join(", ")}</td></tr>`).join("")
+    : '<tr><td colspan="3" class="empty">Noch nichts bestellt.</td></tr>';
+}
+$("personList").addEventListener("click", async e => {
+  const ed = e.target.closest("[data-edit]");
+  const de = e.target.closest("[data-del]");
+  if (ed) {
+    const o = state.orders.find(x => x.token === ed.dataset.edit);
+    if (o) startEditing(o.token, o, "Du bearbeitest die Bestellung von " + (o.name || "ohne Namen") + ".");
+  }
+  if (de) {
+    const t = de.dataset.del;
+    if (!delArmed.has(t)) {
+      delArmed.set(t, setTimeout(() => { delArmed.delete(t); renderOverview(); }, 4000));
+      renderOverview();
+      return;
+    }
+    clearTimeout(delArmed.get(t)); delArmed.delete(t);
+    try {
+      const r = await apiPost({action:"delete", token:t, key:state.adminKey});
+      $("exportStatus").textContent = r.ok ? "Gelöscht." : errText(r.error);
+      if (t === state.token && r.ok) { state.ownSaved = false; $("withdraw").hidden = true; }
+      loadOverview();
+    } catch (err) { $("exportStatus").textContent = "Keine Verbindung zum Server."; }
+  }
+});
+$("copyNames").addEventListener("click", async () => {
+  const text = state.orders.map(e => e.name || "ohne Namen").join("\n");
+  let ok = false;
+  try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {}
+  if (!ok) {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    ta.remove();
+  }
+  $("namesStatus").textContent = ok ? "Kopiert." : "Kopieren hat nicht geklappt.";
+});
+
+/* ---------- Einstellungen ---------- */
+function applyConfig(r){
+  state.locked = !!r.locked;
+  state.info = String(r.info || "");
+  $("info").hidden = !state.info;
+  $("info").textContent = state.info;
+  $("lockBox").checked = state.locked;
+  $("lockNotice").hidden = !(state.locked && !state.isAdmin);
+  $("saveBtn").disabled = !configured || (state.locked && !state.isAdmin);
+  if (document.activeElement !== $("infoText")) $("infoText").value = state.info;
+}
+async function saveSettings(patch, el, okMsg){
+  try {
+    const r = await apiPost({action:"settings", key:state.adminKey, ...patch});
+    if (r.ok) { applyConfig(r); el.textContent = okMsg; } else el.textContent = errText(r.error);
+  } catch (e) { el.textContent = "Keine Verbindung zum Server."; }
+}
+$("infoBtn").addEventListener("click", () => saveSettings({info:$("infoText").value.trim()}, $("infoStatus"), "Gespeichert."));
+$("lockBox").addEventListener("change", e => saveSettings({locked:e.target.checked}, $("exportStatus"), e.target.checked ? "Bestellung geschlossen." : "Bestellung wieder geöffnet."));
+$("logout").addEventListener("click", () => { store.del("xk-admin"); location.reload(); });
+
+/* ---------- Export ---------- */
+const today = () => new Date().toLocaleDateString("de-DE", {day:"2-digit", month:"2-digit", year:"numeric"});
+function download(filename, blob){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+}
+function fmtCols(ws, cols, z){
+  const r = XLSX.utils.decode_range(ws["!ref"]);
+  for (let R = 1; R <= r.e.r; R++) for (const C of cols) {
+    const cell = ws[XLSX.utils.encode_cell({r:R, c:C})];
+    if (cell && cell.t === "n") cell.z = z;
+  }
+}
+function exportXlsx(){
+  const list = state.orders;
+  if (!list.length) { $("exportStatus").textContent = "Noch keine Bestellungen zum Exportieren."; return; }
+  if (typeof XLSX === "undefined") { $("exportStatus").textContent = "Excel-Export konnte nicht geladen werden."; return; }
+  const agg = aggregate(list);
+  const total = list.reduce((s, e) => s + orderTotal(e), 0);
+  const money = '#,##0.00 "€"';
+  const wb = XLSX.utils.book_new();
+
+  const s1 = [["Kategorie", "Speise", "Anzahl", "Einzelpreis", "Summe", "Bestellt von"]];
+  agg.forEach(a => s1.push([a.item.cat, a.item.name, a.total, a.item.price, a.total * a.item.price, a.people.map(personStr).join(", ")]));
+  s1.push([], ["", "Gesamt", agg.reduce((s, a) => s + a.total, 0), "", total, ""]);
+  const ws1 = XLSX.utils.aoa_to_sheet(s1);
+  ws1["!cols"] = [{wch:13}, {wch:20}, {wch:8}, {wch:11}, {wch:11}, {wch:70}];
+  fmtCols(ws1, [3, 4], money);
+  XLSX.utils.book_append_sheet(wb, ws1, "Nach Speisen");
+
+  const s2 = [["Name", "Bestellung", "Sonderwünsche", "Summe"]];
+  list.forEach(e => s2.push([e.name, orderLines(e).join(", "), e.note || "", orderTotal(e)]));
+  s2.push([], ["Gesamt", "", "", total]);
+  const ws2 = XLSX.utils.aoa_to_sheet(s2);
+  ws2["!cols"] = [{wch:24}, {wch:70}, {wch:30}, {wch:11}];
+  fmtCols(ws2, [3], money);
+  XLSX.utils.book_append_sheet(wb, ws2, "Nach Personen");
+
+  const cols = agg.map(a => a.item);
+  const s3 = [["Name", ...cols.map(c => c.name), "Summe"]];
+  list.forEach(e => s3.push([e.name, ...cols.map(c => e.items[c.id] || ""), orderTotal(e)]));
+  s3.push(["Gesamt", ...agg.map(a => a.total), total]);
+  const ws3 = XLSX.utils.aoa_to_sheet(s3);
+  ws3["!cols"] = [{wch:24}, ...cols.map(c => ({wch:Math.max(8, Math.min(18, c.name.length + 2))})), {wch:11}];
+  fmtCols(ws3, [cols.length + 1], money);
+  XLSX.utils.book_append_sheet(wb, ws3, "Tabelle");
+
+  const s4 = [["Schon eingetragen"], ...list.map(e => [e.name])];
+  const ws4 = XLSX.utils.aoa_to_sheet(s4);
+  ws4["!cols"] = [{wch:30}];
+  XLSX.utils.book_append_sheet(wb, ws4, "Namensliste");
+
+  const out = XLSX.write(wb, {bookType:"xlsx", type:"array"});
+  download("Weihnachtsfeier-Bestellung-III-Koenige.xlsx", new Blob([out], {type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}));
+}
+function exportPdf(){
+  const list = state.orders;
+  if (!list.length) { $("exportStatus").textContent = "Noch keine Bestellungen zum Exportieren."; return; }
+  if (!window.jspdf) { $("exportStatus").textContent = "PDF-Export konnte nicht geladen werden."; return; }
+  const agg = aggregate(list);
+  const total = list.reduce((s, e) => s + orderTotal(e), 0);
+  const dishes = agg.reduce((s, a) => s + a.total, 0);
+  const doc = new window.jspdf.jsPDF({unit:"mm", format:"a4"});
+  const head = [27, 34, 50];
+  doc.setFont("helvetica", "bold"); doc.setFontSize(17);
+  doc.text("Weihnachtsfeier – Vorbestellung", 14, 18);
+  doc.setFont("helvetica", "normal"); doc.setFontSize(10);
+  doc.text(`III Könige, Stand ${today()}. ${list.length} Personen, ${dishes} Gerichte und Dips, Gesamt ${eurPlain(total)}`, 14, 25);
+  let y = 34;
+  if (state.info) {
+    const lines = doc.splitTextToSize(state.info, 182);
+    doc.text(lines, 14, 31);
+    y = 31 + 5 * lines.length + 3;
+  }
+  doc.setFont("helvetica", "bold"); doc.setFontSize(13);
+  doc.text("Nach Speisen", 14, y);
+  doc.autoTable({
+    startY:y + 3, theme:"grid",
+    head:[["Speise", "Anzahl", "Bestellt von"]],
+    body:agg.map(a => [a.item.name, String(a.total), a.people.map(personStr).join(", ")]),
+    foot:[["Gesamt", String(dishes), ""]],
+    styles:{font:"helvetica", fontSize:9, cellPadding:2, lineColor:[210, 214, 222]},
+    headStyles:{fillColor:head, textColor:255}, footStyles:{fillColor:[238, 240, 243], textColor:20},
+    columnStyles:{0:{cellWidth:40}, 1:{cellWidth:18, halign:"center"}}
+  });
+  y = doc.lastAutoTable.finalY + 12;
+  if (y > 260) { doc.addPage(); y = 18; }
+  doc.setFont("helvetica", "bold"); doc.setFontSize(13);
+  doc.text("Nach Personen", 14, y);
+  doc.autoTable({
+    startY:y + 3, theme:"grid",
+    head:[["Name", "Bestellung", "Sonderwünsche", "Summe"]],
+    body:list.map(e => [e.name || "", orderLines(e).join(", "), e.note || "", eurPlain(orderTotal(e))]),
+    foot:[["Gesamt", "", "", eurPlain(total)]],
+    styles:{font:"helvetica", fontSize:9, cellPadding:2, lineColor:[210, 214, 222]},
+    headStyles:{fillColor:head, textColor:255}, footStyles:{fillColor:[238, 240, 243], textColor:20},
+    columnStyles:{0:{cellWidth:36}, 2:{cellWidth:40}, 3:{cellWidth:22, halign:"right"}}
+  });
+  const pages = doc.getNumberOfPages();
+  for (let i = 1; i <= pages; i++) { doc.setPage(i); doc.setFontSize(8); doc.setTextColor(120); doc.text(`Seite ${i} von ${pages}`, 196, 290, {align:"right"}); }
+  download("Weihnachtsfeier-Bestellung-III-Koenige.pdf", doc.output("blob"));
+}
+$("xlsxBtn").addEventListener("click", exportXlsx);
+$("pdfBtn").addEventListener("click", exportPdf);
+
+/* ---------- Start ---------- */
+buildMenu();
+
+async function init(){
+  // Verwaltungsschlüssel aus dem Link (#admin=...) übernehmen und aus der Adresszeile entfernen
+  const m = location.hash.match(/admin=([A-Za-z0-9]+)/);
+  if (m) { store.set("xk-admin", m[1]); history.replaceState(null, "", location.pathname + location.search); }
+  state.adminKey = store.get("xk-admin");
+
+  state.token = store.get("xk-token");
+  if (!state.token) { state.token = newToken(); store.set("xk-token", state.token); }
+
+  if (!configured) { $("setupNotice").hidden = false; $("saveBtn").disabled = true; return; }
+
+  try {
+    const r = await apiGet({action:"mine", token:state.token});
+    if (r.ok) {
+      applyConfig(r);
+      if (r.order && !editing) {
+        fillForm(r.order);
+        state.ownSaved = true;
+        $("withdraw").hidden = false;
+        setStatus("Deine gespeicherte Bestellung ist geladen.", "ok");
+      }
+    }
+  } catch (e) { setStatus("Keine Verbindung zum Server. Bitte lade die Seite später neu.", "err"); }
+
+  if (state.adminKey) {
+    try {
+      const r = await apiGet({action:"list", key:state.adminKey});
+      if (r.ok) {
+        state.isAdmin = true;
+        $("tabs").hidden = false;
+        state.orders = (r.orders || []).filter(o => o.items && Object.keys(o.items).length)
+          .sort((a, b) => String(a.name).localeCompare(String(b.name), "de"));
+        applyConfig(r);
+        renderOverview();
+      } else if (r.error === "key") {
+        store.del("xk-admin");
+        setStatus("Der Verwaltungslink ist ungültig.", "err");
+      }
+    } catch (e) {}
+  }
+}
+init();
+</script>
+</body>
+</html>
