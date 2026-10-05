@@ -557,14 +557,21 @@ function aggregate(list){
   const map = new Map();
   for (const e of list) for (const [id, n] of Object.entries(e.items)) {
     const it = ITEMS.get(id); if (!it) continue;
-    if (!map.has(id)) map.set(id, {item:it, total:0, people:[]});
-    const a = map.get(id);
+    const dipId = it.dip ? ((e.dips && e.dips[id]) || "") : "";
+    const key = id + "|" + dipId;
+    if (!map.has(key)) map.set(key, {
+      key, id, dipId, item:it, total:0, people:[],
+      label: it.dip ? it.name + " mit " + (dipId ? dipName(dipId) : "offenem Dip") : it.name
+    });
+    const a = map.get(key);
     a.total += n;
-    a.people.push({name:e.name || "ohne Namen", n, dip: e.dips && e.dips[id] ? dipName(e.dips[id]) : (it.dip ? "Dip offen" : "")});
+    a.people.push({name:e.name || "ohne Namen", n});
   }
-  return [...map.entries()].sort((a, b) => orderIndex(a[0]) - orderIndex(b[0])).map(x => x[1]);
+  const dipIdx = d => d ? DIPS.findIndex(x => x.id === d) : 999;
+  return [...map.values()].sort((a, b) => (orderIndex(a.id) - orderIndex(b.id)) || (dipIdx(a.dipId) - dipIdx(b.dipId)));
 }
-const personStr = p => p.name + (p.n > 1 ? " " + p.n + "×" : "") + (p.dip ? " (" + p.dip + ")" : "");
+const matches = (e, a) => !!e.items[a.id] && (!a.item.dip || ((e.dips && e.dips[a.id]) || "") === a.dipId);
+const personStr = p => p.name + (p.n > 1 ? " " + p.n + "×" : "");
 
 const delArmed = new Map();
 function renderOverview(){
@@ -592,7 +599,7 @@ function renderOverview(){
     </div>`).join("") : '<p class="empty">Noch keine Bestellungen. Teil den Link mit dem Kollegium oder trag selbst die erste ein.</p>';
 
   $("dishBody").innerHTML = agg.length
-    ? agg.map(a => `<tr><td>${esc(a.item.name)}</td><td class="num">${a.total}</td><td>${a.people.map(p => esc(personStr(p))).join(", ")}</td></tr>`).join("")
+    ? agg.map(a => `<tr><td>${esc(a.label)}</td><td class="num">${a.total}</td><td>${a.people.map(p => esc(personStr(p))).join(", ")}</td></tr>`).join("")
     : '<tr><td colspan="3" class="empty">Noch nichts bestellt.</td></tr>';
 }
 $("personList").addEventListener("click", async e => {
@@ -680,7 +687,7 @@ function exportXlsx(){
   const wb = XLSX.utils.book_new();
 
   const s1 = [["Kategorie", "Speise", "Anzahl", "Einzelpreis", "Summe", "Bestellt von"]];
-  agg.forEach(a => s1.push([a.item.cat, a.item.name, a.total, a.item.price, a.total * a.item.price, a.people.map(personStr).join(", ")]));
+  agg.forEach(a => s1.push([a.item.cat, a.label, a.total, a.item.price, a.total * a.item.price, a.people.map(personStr).join(", ")]));
   s1.push([], ["", "Gesamt", agg.reduce((s, a) => s + a.total, 0), "", total, ""]);
   const ws1 = XLSX.utils.aoa_to_sheet(s1);
   ws1["!cols"] = [{wch:13}, {wch:20}, {wch:8}, {wch:11}, {wch:11}, {wch:70}];
@@ -695,12 +702,12 @@ function exportXlsx(){
   fmtCols(ws2, [3], money);
   XLSX.utils.book_append_sheet(wb, ws2, "Nach Personen");
 
-  const cols = agg.map(a => a.item);
-  const s3 = [["Name", ...cols.map(c => c.name), "Summe"]];
-  list.forEach(e => s3.push([e.name, ...cols.map(c => e.items[c.id] || ""), orderTotal(e)]));
+  const cols = agg;
+  const s3 = [["Name", ...cols.map(c => c.label), "Summe"]];
+  list.forEach(e => s3.push([e.name, ...cols.map(c => matches(e, c) ? e.items[c.id] : ""), orderTotal(e)]));
   s3.push(["Gesamt", ...agg.map(a => a.total), total]);
   const ws3 = XLSX.utils.aoa_to_sheet(s3);
-  ws3["!cols"] = [{wch:24}, ...cols.map(c => ({wch:Math.max(8, Math.min(18, c.name.length + 2))})), {wch:11}];
+  ws3["!cols"] = [{wch:24}, ...cols.map(c => ({wch:Math.max(8, Math.min(22, c.label.length + 2))})), {wch:11}];
   fmtCols(ws3, [cols.length + 1], money);
   XLSX.utils.book_append_sheet(wb, ws3, "Tabelle");
 
@@ -736,11 +743,11 @@ function exportPdf(){
   doc.autoTable({
     startY:y + 3, theme:"grid",
     head:[["Speise", "Anzahl", "Bestellt von"]],
-    body:agg.map(a => [a.item.name, String(a.total), a.people.map(personStr).join(", ")]),
+    body:agg.map(a => [a.label, String(a.total), a.people.map(personStr).join(", ")]),
     foot:[["Gesamt", String(dishes), ""]],
     styles:{font:"helvetica", fontSize:9, cellPadding:2, lineColor:[210, 214, 222]},
     headStyles:{fillColor:head, textColor:255}, footStyles:{fillColor:[238, 240, 243], textColor:20},
-    columnStyles:{0:{cellWidth:40}, 1:{cellWidth:18, halign:"center"}}
+    columnStyles:{0:{cellWidth:48}, 1:{cellWidth:18, halign:"center"}}
   });
   y = doc.lastAutoTable.finalY + 12;
   if (y > 260) { doc.addPage(); y = 18; }
