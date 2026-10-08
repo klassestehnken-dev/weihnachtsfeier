@@ -255,8 +255,8 @@ const MENU = [
   {id:"vorab", title:"Vorab", items:[
     {id:"edamame", name:"Edamame", desc:"junge Sojabohne | Limette | Meersalz", price:6.9, tags:["v"]},
     {id:"dolmadakia", name:"Dolmadakia", desc:"Fava | Kapern | Olive", price:6.9, tags:["v"]},
-    {id:"aioli-vorab", name:"Aioli", desc:"Knoblauch | Zitrone | Thymian", price:3.9},
-    {id:"feigencreme-vorab", name:"Feigencreme", desc:"karamellisierte Walnuss | Frischkäse", price:4.1},
+    {id:"aioli-vorab", name:"Aioli", full:"Aioli (Vorspeise)", desc:"Knoblauch | Zitrone | Thymian", price:3.9},
+    {id:"feigencreme-vorab", name:"Feigencreme", full:"Feigencreme (Vorspeise)", desc:"karamellisierte Walnuss | Frischkäse", price:4.1},
     {id:"brot", name:"Brot", desc:"", price:2.5, tags:["v"]},
     {id:"oliven", name:"Oliven", desc:"", price:4.9, tags:["v"]}
   ]},
@@ -288,8 +288,8 @@ const MENU = [
     {id:"teriyaki", name:"Teriyaki", desc:"süß | salzig", price:1.5, tags:["v"]},
     {id:"cho-ganjang", name:"Cho Ganjang", desc:"Soja | Sesam", price:1.5, tags:["v"]},
     {id:"cho-gochujang", name:"Cho Gochujang", desc:"pikant | fruchtig", price:1.5, tags:["v","s"]},
-    {id:"feigencreme", name:"Feigencreme", desc:"karamellisierte Walnuss | Frischkäse", price:1.5},
-    {id:"aioli", name:"Aioli", desc:"Knoblauch | Zitrone | Thymian", price:1.5},
+    {id:"feigencreme", name:"Feigencreme", full:"Feigencreme (Dip)", desc:"karamellisierte Walnuss | Frischkäse", price:1.5},
+    {id:"aioli", name:"Aioli", full:"Aioli (Dip)", desc:"Knoblauch | Zitrone | Thymian", price:1.5},
     {id:"bbq", name:"BBQ", desc:"fruchtig | rauchig", price:1.5, tags:["v"]},
     {id:"karamell", name:"Karamell", desc:"Kokos | Meersalzflocken", price:1.5}
   ]},
@@ -424,7 +424,7 @@ function orderTotal(o){
 }
 function lineLabel(o, id){
   const it = ITEMS.get(id);
-  return it.name + (o.dips && o.dips[id] ? ` (Dip: ${dipName(o.dips[id])})` : (it.dip ? " (Dip offen)" : ""));
+  return (it.full || it.name) + (o.dips && o.dips[id] ? ` (Dip: ${dipName(o.dips[id])})` : (it.dip ? " (Dip offen)" : ""));
 }
 function orderLines(o){
   return Object.entries(o.items || {}).filter(([id]) => ITEMS.has(id))
@@ -561,7 +561,7 @@ function aggregate(list){
     const key = id + "|" + dipId;
     if (!map.has(key)) map.set(key, {
       key, id, dipId, item:it, total:0, people:[],
-      label: it.dip ? it.name + " mit " + (dipId ? dipName(dipId) : "offenem Dip") : it.name
+      label: it.dip ? it.name + " mit " + (dipId ? dipName(dipId) : "offenem Dip") : (it.full || it.name)
     });
     const a = map.get(key);
     a.total += n;
